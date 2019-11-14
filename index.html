@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Dem Polling</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
+  <!-- stylin' -->
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/agency.css">
+  <!-- Custom fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Raleway|Roboto|Roboto+Mono|Roboto+Slab" rel="stylesheet">
+  <!-- sliders -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.css">
+</head>
+
+<body>
+  <!-- navbar -->
+  <nav id="navbar">
+    <div class="navbar-header">
+      <a class="navbar-brand team-name" href="https://morbid-curiosity.herokuapp.com" style="padding-left:25px">2020 Race</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="menu">
+          <a target="#_blank" href="https://github.com/sarahfawson/mica-dem-polling-map" style="padding-right:20px">
+            <img width=25px src="static/images/GitHub-Mark-32px.png">
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- jumbotron & intro -->
+  <div class="row">
+    <div class="jumbotron text-center">
+      <div class="overlay"></div>
+      <div class="inner">
+        <h1><span>The 2020 Race</span></h1>
+        <h3 class="h3-white">Who's ahead and who is lagging behind in each state</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- USA heat map -->
+  <div class="container">
+    <h2 class="row whitespace" id="USAmortality">Polling Averages</h2>
+    <div class="row whitespace" style="padding-bottom: 0px">
+      <div class="col-md-4" id="heatmapSelector1">
+        <div align="center" class="form-group">
+          <ul class="list-group" id="filters">
+            <li class="filter list-group-item">
+              <label>Select a Candidate:</label><br>
+              <select id="disease_type" onchange="rebuildMap()">
+                <option value="all" selected>All</option>
+                <option value="biden">Joe Biden</option>
+                <option value="warren">Elizabeth Warren</option>
+                <option value="sanders">Bernie Sanders</option>
+                <option value="buttigieg">Pete Buttigieg</option>
+                <option value="harris">Kamala  Harris</option>
+              </select>
+            </li>
+          </ul>
+        </div>  
+      </div>
+      <div class="col-md-4" id="heatmapSelector2">
+        <div align="center" class="form-group">
+          <ul class="list-group" id="filters">
+            <li class="filter list-group-item">
+              <label>Select a State:</label><br>
+              <input id="pop_slide" data-slider-id='PopSlider' data-slider-tooltip='show' data-slider-handle="round" type="text" class="span2" value="" data-slider-min="0" data-slider-max="100000" data-slider-step="5000" data-slider-ticks="[0, 20000, 40000, 60000, 80000, 100000]" data-slider-ticks-labels='["0", "20K", "40K", "60K", "80K", "100K+"]' data-slider-ticks-snap-bounds="2500" data-slider-value="[0,100000]"/>
+            </li>
+          </ul>
+        </div>  
+      </div>
+    </div>
+    <div class="row whitespace" style="padding-top: -150px">
+      <div class="col-md-12">
+        <div id="heatmap" style="height: 650px;" ></div>
+        <p>How are these candidates polling as of November 2019? Use the filters above to learn more.
+        </p>
+      </div>
+    </div>
+  </div>
+
+    </section>
+    <div class="row whitespace"></div>
+  </div>
+  <div class="footer">Brought to you by Sarah Fawson.</div>
+  <!-- libraries -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+  <script src="https://cdn.plot.ly/plotly-1.31.2.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script> <!-- chart.js -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+  <!-- main visualizations -->
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.js"></script> -->
+
+  <script src="static/js/map.js"></script>
+  <script type="text/javascript" src="static/js/choropleth.js"></script>
+
+  <!-- Custom scripts for the 'navigate' section template code -->
+  <script src="js/agency.min.js"></script>
+</body>
+
+</html>
