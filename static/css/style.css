@@ -86,6 +86,19 @@ button {
 /* ======================================
  Class Data
  ====================================== */
+ 
+ .info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
 
 .comment {
     font-family: 'Roboto', sans-serif !important;
@@ -150,21 +163,6 @@ button {
     padding: 30px;
 }
 
-.blockquote {
-    padding: 0.5rem 1rem;
-    margin-bottom: 2rem;
-    font-size: 1rem;
-    border-left: 7px solid rgb(235, 45, 31);
-}
-
-.well {
-    background-color: rgba(255, 255, 255, .5) !important;
-}
-
-.whiteB {
-    background-color: whitesmoke;
-}
-
 .footer {
     background-color:rgb(68, 31, 235);
     color:whitesmoke;
@@ -174,19 +172,13 @@ button {
     padding: 20px;
 }
 
-.form-group {
+/* .form-group {
     background-color: rgba(255, 255, 255, .5);
-}
-
-.carousel-inner > .item > img,
-.carousel-inner > .item > a > img {
-  width: 60%;
-  margin: auto;
 }
 
 .bg-light {
     background-color: #f8f9fa !important;
-  }
+  } */
   
 a.bg-light:hover, a.bg-light:focus,
 button.bg-light:hover,

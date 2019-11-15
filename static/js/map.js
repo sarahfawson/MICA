@@ -64,19 +64,18 @@ var basemap = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?
     attribution: "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors, <a href='https://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>, Imagery © <a href='https://www.mapbox.com/'>Mapbox</a>",
 }).addTo(map);
 
-L.geoJson(stateData).addTo(map);
-// console.log(stateData);
+// L.geoJson(stateData).addTo(map);
 
 // Then add 'basemap' tile layer to the map.
 basemap.addTo(map);
 
 // set color range
-function getColor(d) {
-    return d > 1000 ? '#1C16A3' :
-           d > 500  ? '#441FEB' :
-           d > 100  ? '#5754ED' :
-           d > 50   ? '#8576F4' :
-           d > 10   ? '#AAA8F4' :
+function getColor(c) {
+    return c > 1000 ? '#1C16A3' :
+           c > 500  ? '#441FEB' :
+           c > 100  ? '#5754ED' :
+           c > 50   ? '#8576F4' :
+           c > 10   ? '#AAA8F4' :
                       '#AAA8F4';
 }
 
@@ -98,10 +97,11 @@ function highlightFeature(e) {
     var layer = e.target;
 
     layer.setStyle({
-        weight: 4,
-        color: '#4AFFC3',
+        weight: 1,
+        color: '#1C16A3',
         dashArray: '',
-        fillOpacity: 0.5
+        fillcolor: 'black',
+        fillOpacity: 0.3
     });
 
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
@@ -132,3 +132,172 @@ geojson = L.geoJson(stateData, {
     style: style,
     onEachFeature: onEachFeature
 }).addTo(map)
+
+function rebuildMap() {
+    geojson.clearLayers();
+    buildMap(window.data);
+  };
+
+// ** custom control for tooltip on hover **
+var info = L.control();
+
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+    this._div.innerHTML = '<h4>Biden</h4>' +  (props ?
+        '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
+        : 'Hover over a state');
+};
+
+info.addTo(map);
+
+// update on new mouseover 
+function highlightFeature(e) {
+    info.update(layer.feature.properties);
+}
+
+function resetHighlight(e) {
+    info.update();
+}
+
+
+
+  // ****************************
+  // morbid curiosity code
+
+  var selected_candidate = document.getElementById('candidate').value;
+  if (selected_candidate.value == "warren"){
+    var popup = "Elizabeth Warren";
+  } else if (selected_candidate == "biden"){
+    var popup = "Joe Biden";
+  }
+  else {
+    var popup = "Other";
+  }
+//   var newfeatures = data.features.filter(function(row) {
+//     if((row.properties.Population >= parseInt(selected_pop_low)) && 
+//     (row.properties.Population <= parseInt(selected_pop_high)) && 
+//     (parseInt((row.properties["Total per enrollee (age, sex, race, price adjusted)"])) >= parseInt(selected_spend_low)) &&
+//     (parseInt((row.properties["Total per enrollee (age, sex, race, price adjusted)"])) <= parseInt(selected_spend_high))
+//     ) {
+//       return true
+//     } else {
+//       return false;}})
+//   var newdata ={
+//     "type": "FeatureCollection", 
+//     "features": newfeatures
+//   }
+//   if (selected_disease == "Life Expectancy"){
+//     geojson = L.choropleth(newdata, {
+
+//       // Define what  property in the features to use
+//       valueProperty: selected_candidate,
+//       // q for quartile, e for equidistant, k for k-means
+//       style: {
+//         // Border color
+//         color: "#fff",
+//         weight: .2,
+//         fillOpacity: 0.8},
+//     onEachFeature: function(feature, layer) {
+//       layer.bindPopup("<h4>" + feature.properties.LOCATION +
+//       `</h4><hr><p> <b> ${popup}: ` + parseFloat(feature.properties[selected_candidate]).toFixed(3) + "</b></p>", {
+//         autoPan: false});
+//       layer.on('mouseover', function (e) {
+//         this.openPopup(autoPan=false)});
+//       layer.on('mouseout', function (e) {
+//         this.closePopup()});
+//       }}).addTo(map)
+//       var legend = L.control({ position: "bottomleft" });
+//       legend.onAdd = function() {
+//         var elements = document.getElementsByClassName("info legend leaflet-control");
+//         while(elements.length > 0){
+//             elements[0].parentNode.removeChild(elements[0]);
+//         }
+//         var div = L.DomUtil.create("div", "info legend");
+//         var limits = geojson.options.limits;
+//         var colors = geojson.options.colors;
+//         var labels = [];
+  
+//         // Add min & max
+//         var legendInfo = `<h4>${popup}</h4>` +
+//           "<div align=\"center\" class=\"p\">" + "(Years)" + "</div>" +
+//           "<div class=\"labels\">" +
+//             "<div class=\"min\">" + limits[0].toFixed(3) + "</div>" +
+//             "<div class=\"max\">" + limits[limits.length - 1].toFixed(3) + "</div>" +
+//           "</div>";
+  
+//         div.innerHTML = legendInfo;
+  
+//         limits.forEach(function(limit, index) {
+//           labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+//         });
+  
+//         div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+//         return div;
+//       };
+//       // Adding legend to the map
+//       legend.addTo(map);
+//       }
+//   else {
+//   geojson = L.choropleth(newdata, {
+
+//     // Define what  property in the features to use
+//     valueProperty: selected_disease,
+
+//     // // Set color scale
+//     // scale: ["#fdba9f", "#eb2d1f"],
+
+//     // // Number of breaks in step range
+//     // steps: 10,
+
+//     // q for quartile, e for equidistant, k for k-means
+//     style: {
+//       // Border color
+//       color: "#fff",
+//       weight: .2,
+//       fillOpacity: 0.8},
+//   onEachFeature: function(feature, layer) {
+//     layer.bindPopup("<h4>" + feature.properties.LOCATION +
+//     `</h4><hr><p> <b> ${popup}: ` + parseFloat(feature.properties[selected_disease]).toFixed(3) + "</b></p>", {
+//       autoPan: false});
+//     layer.on('mouseover', function (e) {
+//       this.openPopup(autoPan=false)});
+//     layer.on('mouseout', function (e) {
+//       this.closePopup()});
+//     }}).addTo(map)
+//     var legend = L.control({ position: "bottomleft" });
+//     legend.onAdd = function() {
+//       var elements = document.getElementsByClassName("info legend leaflet-control");
+//       while(elements.length > 0){
+//           elements[0].parentNode.removeChild(elements[0]);
+//       }
+//       var div = L.DomUtil.create("div", "info legend");
+//       var limits = geojson.options.limits;
+//       var colors = geojson.options.colors;
+//       var labels = [];
+
+//     //   // Add min & max
+//     //   var legendInfo = `<h4>${popup}</h4>` +
+//     //   "<div align=\"center\" class=\"p\">" + "(Deaths per 1,000)" + "</div>" +
+//     //     "<div class=\"labels\">" +
+//     //       "<div class=\"min\">" + limits[0].toFixed(3) + "</div>" +
+//     //       "<div class=\"max\">" + limits[limits.length - 1].toFixed(3) + "</div>" +
+//     //     "</div>";
+
+//     //   div.innerHTML = legendInfo;
+
+//     //   limits.forEach(function(limit, index) {
+//     //     labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+//     //   });
+
+//     //   div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+//     //   return div;
+//     // };
+//     // // Adding legend to the map
+//     // legend.addTo(map);
+//   }};
