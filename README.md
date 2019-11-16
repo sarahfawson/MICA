@@ -9,7 +9,7 @@ I will use [leaflet.js](https://leafletjs.com/examples/choropleth/) to plot the 
 ![rushmore](static/images/ronda-darby-HbMLSB-uhQY-unsplash.jpg)
 
 Here is what the landing page looks like.
-![homepage](static/images/2020-homepage.png)
+![homepage](static/images/2020-homepage.PNG)
 
 And here is an example of the US map visualization and custom tooltip with geojson I put together with python.
 ![map](static/images/map-tooltip.jpg)
