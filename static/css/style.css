@@ -115,10 +115,11 @@ button {
     line-height: 2em;
 }
 
-.myTooltip {
-    background: green;
+/* .myTooltip {
+    background: white;
     border: 2px solid cyan
-}
+} */
+
 .leaflet-tooltip-left.myCSSClass::before {
     border-left-color: cyan;
 }
@@ -134,7 +135,6 @@ button {
     font-size: 16px;
     padding: 15px 32px;
     text-align: center;
-    /* text-decoration: none; */
     display: inline-block;
     font-size: 16px;
   }
@@ -179,7 +179,7 @@ button {
 }
 
 .footer {
-    background-color:rgb(68, 31, 235);
+    background-color:#555;
     color:whitesmoke;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
@@ -187,14 +187,6 @@ button {
     padding: 20px;
 }
 
-/* .form-group {
-    background-color: rgba(255, 255, 255, .5);
-}
-
-.bg-light {
-    background-color: #f8f9fa !important;
-  } */
-  
 a.bg-light:hover, a.bg-light:focus,
 button.bg-light:hover,
 button.bg-light:focus {
@@ -266,22 +258,6 @@ background-color: #dae0e5 !important;
     text-align: center;
     color: rgb(34, 33, 33);
     margin: 2px;
-}
-
-#PopSlider .slider-selection {
-    background: #fdba9f;
-}
-
-#PopSlider .slider-handle {
-    background: #eb2d1f;
-}
-
-#SpendSlider .slider-selection {
-    background: #fdba9f;
-}
-
-#SpendSlider .slider-handle {
-    background: #eb2d1f;
 }
 
 /* ======================================

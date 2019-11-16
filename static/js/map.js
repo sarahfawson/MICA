@@ -4531,7 +4531,7 @@ function getColor(c) {
            c > 7500000 ? '#5754ED' :
            c > 5000000 ? '#8576F4' :
            c > 1000000 ? '#AAA8F4' :
-                      '#AAA8F4';
+                      '#D2D2F7';
 }
 
 // stylin'
@@ -4556,8 +4556,8 @@ var legend = L.control({position: 'bottomright'});
 
     var div = L.DomUtil.create('div', 'info legend');
     labels = ['<h3>State Population</h3>'],
-    text = ["Less than 1,000,000", "5,000,000+", "7,500,000+", "10,000,000+", "20,000,000+"];
-    categories = [1000000, 5000000, 7500000, 10000000, 20000000];
+    text = ["Less than 1,000,000","1,000,000+", "5,000,000+", "7,500,000+", "10,000,000+", "20,000,000+"];
+    categories = [0, 1000000, 5000000, 7500000, 10000000, 20000000];
 
     for (var i = 0; i < categories.length; i++) {
 
